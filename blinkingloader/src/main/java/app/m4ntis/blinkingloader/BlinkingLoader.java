@@ -117,11 +117,19 @@ public class BlinkingLoader extends LinearLayout {
     }
 
     TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BlinkingLoader);
+
+    int orientation = typedArray.getInt(R.styleable.BlinkingLoader_dot_orientation, -1);
+    setOrientation(orientation == VERTICAL ? VERTICAL : HORIZONTAL);
+
+
+
+    dotRadius = typedArray.getDimensionPixelSize(orientation == VERTICAL ? R.styleable.BlinkingLoader_dot_height : R.styleable.BlinkingLoader_dot_width,DEFAULT_DOT_RADIUS);
+
     mIndicatorHorizontalMargin =
         typedArray
             .getDimensionPixelSize(R.styleable.BlinkingLoader_dot_margin, DEFAULT_INDICATOR_MARGIN);
 
-    mIndicatorVerticalMargin = (int) (Math.floor(1.8f * DEFAULT_DOT_RADIUS) - DEFAULT_DOT_RADIUS);
+    mIndicatorVerticalMargin = (int) (Math.floor(1.8f * dotRadius) - dotRadius);
 
     mNumDots = typedArray.getInt(R.styleable.BlinkingLoader_dot_num_dots, DEFAULT_NUM_DOTS);
     mAnimatorResId = typedArray.getResourceId(R.styleable.BlinkingLoader_dot_animator,
@@ -138,8 +146,7 @@ public class BlinkingLoader extends LinearLayout {
         typedArray.getBoolean(R.styleable.BlinkingLoader_auto_start,
             false);
 
-    int orientation = typedArray.getInt(R.styleable.BlinkingLoader_dot_orientation, -1);
-    setOrientation(orientation == VERTICAL ? VERTICAL : HORIZONTAL);
+
 
     int gravity = typedArray.getInt(R.styleable.BlinkingLoader_dot_gravity, -1);
     setGravity(gravity >= 0 ? gravity : Gravity.CENTER);
